@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ShortForm AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+@property --red{syntax:'<color>';inherits:true;initial-value:#ef233c}
+@property --red2{syntax:'<color>';inherits:true;initial-value:#b3001b}
+@property --red4{syntax:'<color>';inherits:true;initial-value:#ffb3bc}
+@property --on{syntax:'<color>';inherits:true;initial-value:#ffffff}
+:root.tr{transition:--red .7s ease,--red2 .7s ease,--red4 .7s ease,--on .7s ease}
+:root[data-theme=instagram]{--red:#f5b82e;--red2:#b8860b;--red4:#ffe3a3;--on:#14110a}
+:root[data-theme=both]{--red2:#d4a017}
+@media(prefers-reduced-motion:reduce){:root.tr{transition:none}}
+:root{--bg:#09090b;--card:#141417;--c2:#1b1b1f;--line:#2a2a30;--red:#ef233c;--red2:#b3001b;--tx:#f5f5f7;--mu:#9b9ba5;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(900px 420px at 85% -10%,color-mix(in srgb,var(--red) 20%,transparent),transparent),radial-gradient(600px 300px at -5% 30%,color-mix(in srgb,var(--red2) 12%,transparent),transparent),var(--bg);color:var(--tx);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(9,9,11,.92);z-index:30}
+.hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:31;background:rgba(9,9,11,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top{max-width:1180px;margin:auto;display:flex;align-items:center;gap:12px;padding:12px 18px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:9px;margin-right:auto}
+.logo i{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--red),var(--red2));display:grid;place-items:center;font-style:normal;font-size:13px;box-shadow:0 0 18px color-mix(in srgb,var(--red) 55%,transparent)}
+.logo span{color:var(--red)}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;color:var(--mu);font:600 13px Inter,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+.seg button.on{background:linear-gradient(135deg,var(--red),var(--red2));color:var(--on);box-shadow:0 0 14px color-mix(in srgb,var(--red) 45%,transparent)}
+.ib{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:12px;width:38px;height:38px;cursor:pointer;font-size:16px}
+nav{max-width:1180px;margin:auto;display:flex;gap:6px;padding:0 18px 10px;overflow-x:auto}
+nav button{white-space:nowrap;border:1px solid transparent;background:none;color:var(--mu);font:500 14px Inter,sans-serif;padding:8px 14px;border-radius:10px;cursor:pointer;transition:.2s}
+nav button:hover{color:var(--tx);background:var(--card)}
+nav button.on{color:#fff;background:color-mix(in srgb,var(--red) 14%,transparent);border-color:color-mix(in srgb,var(--red) 45%,transparent)}
+main{max-width:1180px;margin:auto;padding:26px 18px 60px}
+.view{display:none;animation:fi .35s ease}.view.on{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:clamp(28px,5vw,46px);line-height:1.08;margin:0 0 10px;letter-spacing:-.03em}
+h1 em{font-style:normal;color:var(--red)}
+h2{margin:0 0 4px;font-size:26px;letter-spacing:-.02em}
+.mu,.sub{color:var(--mu)}.sub{margin:0 0 18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:26px 0 34px}
+.tc{background:linear-gradient(160deg,var(--c2),var(--card));border:1px solid var(--line);border-radius:20px;padding:24px;cursor:pointer;transition:.25s;position:relative;overflow:hidden;text-align:left;color:var(--tx);font-family:inherit}
+.tc::after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;background:radial-gradient(circle,color-mix(in srgb,var(--red) 30%,transparent),transparent 70%);opacity:0;transition:.3s}
+.tc:hover{transform:translateY(-4px);border-color:var(--red);box-shadow:0 12px 40px color-mix(in srgb,var(--red) 18%,transparent)}.tc:hover::after{opacity:1}
+.tc .ic{font-size:28px;margin-bottom:10px}.tc h3{margin:0 0 6px;font-size:18px}.tc p{margin:0;color:var(--mu);font-size:14px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:22px}
+label{display:block;font-size:13px;font-weight:600;color:var(--mu);margin:14px 0 6px}label:first-child{margin-top:0}
+input,textarea,select{width:100%;background:#0e0e11;border:1px solid var(--line);color:var(--tx);border-radius:12px;padding:12px 14px;font:inherit;outline:0;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px color-mix(in srgb,var(--red) 18%,transparent)}
+.row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.btn{border:0;background:linear-gradient(135deg,var(--red),var(--red2));color:var(--on);font:700 14px Inter,sans-serif;padding:12px 22px;border-radius:12px;cursor:pointer;transition:.2s;box-shadow:0 6px 22px color-mix(in srgb,var(--red) 32%,transparent)}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.1)}.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:var(--c2);border:1px solid var(--line);box-shadow:none}
+.err{color:#ff6b7d;font-size:13px;margin-top:10px;min-height:0}.err:not(:empty){background:rgba(239,35,60,.1);border:1px solid rgba(239,35,60,.4);padding:9px 12px;border-radius:10px;animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{background:var(--c2);border:1px solid var(--line);color:var(--tx);border-radius:999px;padding:6px 13px;font:500 13px Inter,sans-serif;cursor:pointer;transition:.2s}
+.chip:hover,.chip.on{border-color:var(--red);background:color-mix(in srgb,var(--red) 14%,transparent)}
+.chip[data-ci]::after{content:" ⧉";opacity:.4;font-size:11px}
+.dz{border:1.5px dashed var(--line);border-radius:14px;padding:18px;text-align:center;color:var(--mu);transition:.2s;cursor:pointer}
+.dz.over,.dz:hover{border-color:var(--red);background:color-mix(in srgb,var(--red) 6%,transparent)}
+.dz video{max-width:100%;max-height:220px;border-radius:10px;margin-top:10px;background:#000}
+.empty{border:1px dashed var(--line);border-radius:20px;padding:34px;text-align:center;color:var(--mu)}
+.rh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}.rh h3{margin:0;font-size:18px;margin-right:auto}
+.badge{background:color-mix(in srgb,var(--red) 15%,transparent);border:1px solid color-mix(in srgb,var(--red) 40%,transparent);color:var(--red4);border-radius:999px;font-size:12px;padding:3px 11px;font-weight:600}
+.note{background:var(--c2);border-left:3px solid var(--red);border-radius:10px;padding:10px 14px;color:var(--mu);font-size:13px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.sc{background:linear-gradient(160deg,var(--c2),var(--card));border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:.25s;animation:fi .4s both}
+.sc:hover{border-color:color-mix(in srgb,var(--red) 60%,transparent);transform:translateY(-2px)}
+.sc .t{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cat{background:var(--red);color:var(--on);font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+.score{text-align:right;line-height:1}.score b{font-size:28px;color:var(--red)}.score small{display:block;color:var(--mu);font-size:10px}
+.sc h4{margin:2px 0 0;font-size:17px}.sc p{margin:0;font-size:13.5px}.sc p b{display:block;font-size:11px;text-transform:uppercase;color:var(--red);letter-spacing:.05em}
+.bar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mu)}.bar span{width:58px}.bar i{flex:1;height:6px;background:#26262b;border-radius:9px;overflow:hidden}.bar u{display:block;height:100%;background:linear-gradient(90deg,var(--red2),var(--red));border-radius:9px}.bar em{font-style:normal;width:34px;text-align:right;color:var(--tx)}
+.cb{background:var(--c2);border:1px solid var(--line);color:var(--tx);border-radius:9px;padding:6px 12px;font:600 12px Inter,sans-serif;cursor:pointer;transition:.2s;white-space:nowrap}.cb:hover,.cb.ok{border-color:var(--red);background:color-mix(in srgb,var(--red) 20%,transparent)}
+ol.tl{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:8px}
+ol.tl li{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;animation:fi .35s both}
+ol.tl .n{color:var(--red);font-weight:800;width:22px}ol.tl .x{flex:1;white-space:pre-line}ol.tl small{display:block;color:var(--mu);font-size:11.5px}
+.gl{margin:12px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);font-weight:700}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.sk{height:120px;border-radius:16px;background:linear-gradient(90deg,var(--card),var(--c2),var(--card));background-size:200% 100%;animation:sm 1.1s infinite;margin-bottom:12px}
+@keyframes sm{to{background-position:-200% 0}}
+.ld{display:flex;align-items:center;gap:10px;color:var(--mu);margin-bottom:12px}.ld::before{content:"";width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:sp .7s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.hl{display:grid;gap:8px}.hi{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:.2s;width:100%;color:var(--tx);font:inherit;text-align:left}.hi:hover{border-color:var(--red)}.hi b{flex:1}.hi small{color:var(--mu)}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--red);color:var(--on);font-weight:600;padding:10px 20px;border-radius:999px;opacity:0;transition:.3s;z-index:50;pointer-events:none}#toast.on{opacity:1;transform:translate(-50%,0)}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}.srow select{width:auto}
+@media(max-width:560px){.top{padding:10px 14px}.seg button{padding:7px 12px}main{padding:20px 14px 50px}}
+</style></head><body>
+<header class="hd"><div class="top"><div class="logo" id="logo"><i>▶</i>ShortForm <span>AI</span></div>
+<div class="seg" id="plat"><button data-p="youtube">YouTube</button><button data-p="instagram">Instagram</button><button data-p="both">Both</button></div>
+<button class="ib" id="setb" title="Settings">⚙</button></div><nav id="nav"></nav></header>
+<main id="app"></main><div id="toast"></div>
+<script>
+/* ---------- helpers ---------- */
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cap=s=>s.replace(/\b\w/g,m=>m.toUpperCase());
+function H(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function R(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const shuf=(r,a)=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=(r,a)=>a[Math.floor(r()*a.length)];
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let CP=[];const cp=t=>'data-ci="'+(CP.push(t)-1)+'"';
+const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),1500)}
+function copy(t){const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()};
+ try{navigator.clipboard.writeText(t).catch(fb)}catch(e){fb()}toast('Copied to clipboard')}
+const PL={youtube:'YouTube Shorts',instagram:'Instagram Reels',both:'YouTube Shorts + Instagram Reels'};
+const S={plat:'youtube',view:'home',P:{},file:null,style:'all',busy:false,set:Object.assign({plat:'youtube',sh:true,n:10},store.get('sfai_set',{}))};
+S.plat=S.set.plat;
+
+/* ---------- knowledge base (swap for real AI later) ---------- */
+const KB=[
+{k:/ (endgame|avengers) /,w:'Avengers: Endgame',c:'Tony Stark',tags:['Marvel','MCU','Avengers','Endgame'],sc:[
+['Avengers Assemble Portals','Final battle: every hero arrives through the portals','Most Hype'],
+['Tony\'s Snap & "I Am Iron Man"','Tony takes the Stones and snaps','Most Emotional'],
+['Cap Lifts Mjolnir','Cap proves worthy against Thanos','Most Satisfying'],
+['Cap vs Thanos Shield Fight','Opening clash of the final battle','Best Fight'],
+['Time Heist Elevator Fight','Hulk and Ant-Man on the 2012 mission','Funniest'],
+['Thor Returns Different','The five-years-later reunion reveal','Most Unexpected']]},
+{k:/ (iron man|tony stark) /,ty:'Character',w:'Iron Man',c:'Tony Stark',tags:['Marvel','MCU','IronMan','RobertDowneyJr'],ap:['Iron Man (2008)','Iron Man 2','The Avengers','Iron Man 3','Age of Ultron','Civil War','Spider-Man: Homecoming','Infinity War','Endgame'],sc:[
+['Cave Breakout in the Mark I','Iron Man (2008): Tony fights out of the cave in his first suit','Most Hype'],
+['First Flight Crash','Iron Man (2008): workshop hover test ends against the ceiling','Funniest'],
+['Mark III Suit-Up','Iron Man (2008): armor assembles piece by piece','Best Transformation'],
+['\"I Am Iron Man\" (2008)','Iron Man (2008): the final press-conference line','Best Dialogue'],
+['Obadiah\'s Betrayal','Iron Man (2008): the reveal in Tony\'s workshop','Most Unexpected'],
+['Monaco Suitcase Armor','Iron Man 2: the Mark V armor deploys from a briefcase','Most Hype'],
+['The Mandarin Twist','Iron Man 3: the Trevor Slattery reveal','Most Unexpected'],
+['House Party Protocol','Iron Man 3: every suit arrives for the final fight','Most Hype'],
+['Wormhole Nuke Flight','The Avengers: Tony carries the missile into space','Most Emotional'],
+['Siberia Fight','Civil War: Tony vs Cap and Bucky','Most Emotional'],
+['\"If You\'re Nothing Without the Suit\"','Spider-Man: Homecoming: Tony confronts Peter','Best Dialogue'],
+['Ebony Maw Ship Fight','Infinity War: Tony, Strange and Peter vs Ebony Maw','Best Fight'],
+['Tony\'s Snap & \"I Am Iron Man\"','Endgame: Tony takes the Stones and snaps','Most Emotional'],
+['\"I Love You 3000\"','Endgame: Tony and Morgan at the lake house','Most Emotional']]},
+{k:/ (cars|lightning mcqueen|mcqueen) /,ty:'Character',w:'Cars',c:'Lightning McQueen',tags:['Pixar','Disney','LightningMcQueen','Mater'],ap:['Cars','Cars 2','Cars 3'],sc:[
+['McQueen Helps The King','Cars: final race, he stops to push the wrecked King over the line','Most Emotional'],
+['Dirt Track Drift','Cars: McQueen learns to turn left to go right','Most Satisfying'],
+['Tractor Tipping','Cars: Mater and McQueen scare the tractors','Funniest'],
+['Doc Hudson\'s Backstory','Cars: the trophy room reveal','Most Unexpected'],
+['Radiator Springs Lights Up','Cars: the neon lights switch on to \"Sh-Boom\"','Most Satisfying'],
+['Mater Drives Backwards','Cars: Mater\'s reverse-driving skill','Most Hype'],
+['McQueen\'s Big Crash','Cars 3: the crash that changes his career','Most Unexpected'],
+['Cruz Takes the Lead','Cars 3: Cruz Ramirez takes over the final race','Most Emotional']]},
+{k:/ (spider man|spiderman|peter parker|miles morales) /,ty:'Character',w:'Spider-Man',c:'Peter Parker',tags:['Marvel','SpiderMan','NoWayHome','Spidey'],ap:['Spider-Man (2002)','Spider-Man 2','The Amazing Spider-Man','Civil War','Homecoming','No Way Home','Into the Spider-Verse','Across the Spider-Verse'],sc:[
+['Stopping the Train','Spider-Man 2: Peter stops the runaway train','Best Fight'],
+['Three Spider-Men Reunite','No Way Home: the trio meets in the lab','Most Hype'],
+['Pizza Time','Spider-Man 2: the apartment-door pizza gag','Funniest'],
+['\"With Great Power…\"','Spider-Man (2002): Uncle Ben\'s lesson','Best Dialogue'],
+['Rubble Pep Talk','Homecoming: Peter lifts the debris alone','Most Emotional'],
+['Doc Ock Hospital Scene','Spider-Man 2: Doc Ock\'s arms wake up in the operating room','Most Unexpected'],
+['Airport Battle Entrance','Civil War: Peter joins the airport fight','Most Hype'],
+['Upside-Down Kiss','Spider-Man (2002): the rain kiss with MJ','Most Satisfying'],
+['The Cranes Assemble','The Amazing Spider-Man: New Yorkers help Peter reach Lizard','Most Emotional'],
+['Leap of Faith','Into the Spider-Verse: Miles jumps off the building','Most Hype'],
+['Aunt May\'s Last Words','No Way Home: the great power line returns','Most Emotional']]},
+{k:/ (breaking bad|walter white|heisenberg) /,w:'Breaking Bad',c:'Walter White',tags:['BreakingBad','Heisenberg','WalterWhite','BetterCallSaul'],sc:[
+['"I Am the One Who Knocks"','Walt\'s speech to Skyler','Best Dialogue'],
+['"Say My Name"','Walt confronts Declan','Best Dialogue'],
+['Gus Walks Out','Gus adjusts his tie after the explosion','Most Unexpected'],
+['Pizza on the Roof','Walt\'s frustrated toss','Funniest'],
+['Walt\'s Heisenberg Hat','Meek chemistry teacher becomes Heisenberg','Best Transformation'],
+['Fly Episode Ending','Walt and Jesse in the lab hunting a fly','Funniest']]},
+{k:/ arkham /,ty:'Game',w:'Batman: Arkham',c:'Batman',tags:['Batman','Arkham','ArkhamKnight','Rocksteady'],ap:['Arkham Asylum','Arkham City','Arkham Knight'],sc:[
+['Scarecrow Nightmares','Arkham Asylum: the fear-toxin hallucinations','Most Unexpected'],
+['Freeflow Combat','Arkham series: the counter-and-strike fight flow','Best Fight'],
+['Joker\'s Death','Arkham City: Batman carries the Joker out','Most Emotional'],
+['Batmobile Tank Mode','Arkham Knight: the Batmobile battle mode','Most Hype']]},
+{k:/ (batman|dark knight|bruce wayne) /,ty:'Character',w:'Batman',c:'Bruce Wayne',tags:['Batman','DarkKnight','DCUniverse','Joker'],ap:['Batman Begins','The Dark Knight','The Dark Knight Rises','Batman v Superman','Justice League','The Batman (2022)'],sc:[
+['\"I\'m Batman\" Interrogation','The Dark Knight: Batman vs the Joker','Best Dialogue'],
+['Batpod Truck Flip','The Dark Knight: Batpod chase','Most Hype'],
+['First Warehouse Appearance','Batman Begins: the villains in the dark','Best Hook'],
+['\"Why Do We Fall?\"','Batman Begins: Thomas Wayne\'s lesson and Bruce\'s return','Best Dialogue'],
+['Warehouse Fight','Batman v Superman: the rescue fight','Best Fight'],
+['Hong Kong Kidnap','The Dark Knight: Batman grabs Lau from the skyscraper','Most Unexpected'],
+['Bane Breaks Batman','The Dark Knight Rises: the back-breaking fight','Most Unexpected'],
+['Climb Out of the Pit','The Dark Knight Rises: Bruce makes the final leap','Most Emotional'],
+['\"I\'m Vengeance\"','The Batman (2022): Batman steps out of the dark','Best Dialogue'],
+['Penguin Highway Chase','The Batman (2022): the Batmobile chase','Most Hype']]},
+{k:/ (harry potter|hogwarts|hermione|dumbledore) /,ty:'Movie franchise',w:'Harry Potter',c:'Harry Potter',ap:['Philosopher\'s Stone','Prisoner of Azkaban','Deathly Hallows Part 2'],tags:['HarryPotter','Hogwarts','Wizarding','Hermione'],sc:[
+['Platform 9¾ Entrance','Philosopher\'s Stone: Harry runs through the barrier for the first time','Best Hook'],
+['Life-Size Chess Match','Philosopher\'s Stone: Ron sacrifices himself on the board','Most Satisfying'],
+['Patronus vs Dementors','Prisoner of Azkaban: Harry casts the Patronus by the lake','Most Hype'],
+['Snape\'s Memories','Deathly Hallows Part 2: the truth about Snape and Lily','Most Emotional'],
+['Molly Weasley vs Bellatrix','Deathly Hallows Part 2: the duel in the Great Hall','Best Fight'],
+['Neville\'s Boggart','Prisoner of Azkaban: the Riddikulus lesson in Lupin\'s class','Funniest']]},
+{k:/ (lord of the rings|lotr|gandalf|aragorn|frodo) /,ty:'Movie franchise',w:'The Lord of the Rings',c:'Gandalf',ap:['The Fellowship of the Ring','The Two Towers','The Return of the King'],tags:['LordOfTheRings','LOTR','Gandalf','MiddleEarth'],sc:[
+['\"You Shall Not Pass\"','Fellowship: Gandalf vs the Balrog on the bridge of Khazad-dûm','Most Hype'],
+['Charge of the Rohirrim','Return of the King: Théoden\'s charge at the Pelennor Fields','Most Hype'],
+['Lighting of the Beacons','Return of the King: Gondor calls for aid across the mountains','Best Hook'],
+['\"I Can Carry You\"','Return of the King: Sam carries Frodo up Mount Doom','Most Emotional'],
+['Gandalf the White Returns','The Two Towers: Gandalf reappears in Fangorn Forest','Most Unexpected'],
+['Legolas Takes Down the Oliphaunt','Return of the King: one-man takedown of the Mûmak','Most Satisfying']]},
+{k:/ (star wars|darth vader|luke skywalker|jedi|yoda) /,ty:'Movie franchise',w:'Star Wars',c:'Darth Vader',ap:['A New Hope','Empire Strikes Back','Phantom Menace','Revenge of the Sith','Rogue One'],tags:['StarWars','DarthVader','Jedi','MayTheForce'],sc:[
+['\"I Am Your Father\"','Empire Strikes Back: Vader\'s reveal on Cloud City','Most Unexpected'],
+['Vader Hallway Scene','Rogue One: Vader tears through the rebels on the Profundity','Most Hype'],
+['Duel of the Fates','Phantom Menace: Qui-Gon and Obi-Wan vs Darth Maul','Best Fight'],
+['Trench Run','A New Hope: Luke fires the shot that destroys the Death Star','Most Satisfying'],
+['\"I Have the High Ground\"','Revenge of the Sith: Obi-Wan vs Anakin on Mustafar','Best Dialogue'],
+['Yoda Lifts the X-Wing','Empire Strikes Back: Luke sees what the Force can do','Most Hype']]},
+{k:/ (interstellar|cooper murph) /,w:'Interstellar',c:'Cooper',tags:['Interstellar','ChristopherNolan','HansZimmer','Cooper'],sc:[
+['Docking Spin','Cooper docks with the spinning Endurance to Zimmer\'s organ','Most Hype'],
+['Messages From Home','Cooper watches 23 years of video messages from Earth','Most Emotional'],
+['Miller\'s Planet Wave','The giant wave hits the Ranger','Most Unexpected'],
+['Tesseract Bookshelf','Cooper reaches Murph through the bookshelf','Most Satisfying'],
+['Cooper Leaves Murph','The goodbye before launch','Most Emotional'],
+['Mann\'s Betrayal','Dr. Mann\'s reveal on the ice planet','Most Unexpected']]},
+{k:/ (inception|dom cobb) /,w:'Inception',c:'Dom Cobb',tags:['Inception','ChristopherNolan','DomCobb','Dreams'],sc:[
+['Folding Paris','Ariadne bends the city over itself','Most Hype'],
+['Rotating Hallway Fight','Arthur fights in the zero-gravity hotel hallway','Best Fight'],
+['The Spinning Top Ending','The final shot cuts to black before the top falls','Most Unexpected'],
+['Mombasa Chase','Cobb runs through the market and collapsing walls','Best Hook'],
+['The Kick','The van falls in slow motion while the dream layers unwind','Most Satisfying'],
+['Mal on the Ledge','Cobb confronts the memory of Mal','Most Emotional']]},
+{k:/ (avatar the last airbender|last airbender|aang|zuko|katara) /,w:'Avatar: The Last Airbender',c:'Zuko',tags:['Avatar','ATLA','Aang','Zuko'],sc:[
+['Aang as the Ocean Spirit','Siege of the North: Avatar State against the Fire Nation fleet','Most Hype'],
+['Zuko\'s Agni Kai With His Father','\"The Storm\": Zuko is burned and banished','Most Emotional'],
+['Zuko vs Azula Agni Kai','Finale: the coronation duel in the Fire Nation palace','Best Fight'],
+['Aang vs Ozai','Finale: Aang uses energybending to defeat the Fire Lord','Most Satisfying'],
+['Zuko Joins Team Avatar','Zuko asks to teach Aang firebending','Most Unexpected'],
+['Iroh Sings Leaves From the Vine','Iroh remembers his son in the Jasmine Dragon','Most Emotional']]},
+{k:/ (naruto|sasuke|itachi) /,w:'Naruto',c:'Naruto Uzumaki',tags:['Naruto','Sasuke','Itachi','Anime'],sc:[
+['Naruto vs Sasuke at the Valley of the End','Original series: the first big rivalry fight','Best Fight'],
+['Naruto vs Pain','Shippuden: Naruto defends the Hidden Leaf Village','Most Hype'],
+['Itachi\'s Truth','Shippuden: the real story of the Uchiha massacre','Most Unexpected'],
+['Rock Lee vs Gaara','Chunin Exams: Lee removes his weights','Most Hype'],
+['Jiraiya\'s Death','Shippuden: Jiraiya\'s last battle with Pain','Most Emotional']]},
+{k:/ (dragon ball|goku|vegeta) /,w:'Dragon Ball Z',c:'Goku',tags:['DragonBall','DBZ','Goku','Vegeta'],sc:[
+['Goku Goes Super Saiyan','Frieza saga: Krillin\'s death triggers the transformation','Most Hype'],
+['Goku vs Frieza on Namek','Frieza saga: the long final fight','Best Fight'],
+['Vegeta\'s Sacrifice','Majin Buu saga: Vegeta\'s final stand','Most Emotional'],
+['Father-Son Kamehameha','Cell Games: Gohan and Goku\'s beam vs Cell','Most Satisfying'],
+['Goku Ultra Instinct vs Jiren','Tournament of Power: Goku\'s final form','Most Hype']]},
+{k:/ (attack on titan|eren|levi) /,w:'Attack on Titan',c:'Levi',tags:['AttackOnTitan','AOT','Levi','Eren'],sc:[
+['Wall Maria Breach','Season 1: the Colossal Titan kicks through the gate','Best Hook'],
+['Eren\'s First Transformation','Season 1: Eren turns into a Titan in Trost','Most Unexpected'],
+['Levi vs the Female Titan','Season 1: Levi shreds her in the forest','Best Fight'],
+['Erwin\'s Final Charge','Season 3: the last speech before the charge','Most Emotional'],
+['Basement Reveal','Season 3 Part 2: Eren and Armin reach Grisha\'s basement','Most Unexpected']]},
+{k:/ (stranger things|eleven|hawkins) /,w:'Stranger Things',c:'Eleven',tags:['StrangerThings','Eleven','Hawkins','Netflix'],sc:[
+['Eleven vs the Demogorgon','Season 1 finale: she uses her powers at the school','Most Hype'],
+['Max Escapes Vecna','Season 4: \"Running Up That Hill\" saves her','Most Emotional'],
+['\"Neverending Story\" Duet','Season 3: Dustin and Suzie sing on the radio','Funniest'],
+['Hopper\'s Goodbye Letter','Season 3 finale: Hopper\'s message to Eleven','Most Emotional'],
+['Vecna\'s Origin Reveal','Season 4: Eleven learns who Vecna is','Most Unexpected']]},
+{k:/ (squid game) /,w:'Squid Game',c:'Gi-hun',tags:['SquidGame','Netflix','KDrama','Gihun'],sc:[
+['Red Light, Green Light','Episode 1: the giant doll opens fire','Best Hook'],
+['Dalgona Candy Challenge','Episode 3: carving the honeycomb shape','Most Unexpected'],
+['Tug of War','Episode 4: strategy over strength','Most Hype'],
+['Marbles Game','Episode 6: Gi-hun and Il-nam','Most Emotional'],
+['Glass Bridge','Episode 8: stepping on the wrong pane','Most Hype'],
+['Il-nam\'s Reveal','Final episode: the old man\'s secret','Most Unexpected']]},
+{k:/ (game of thrones|daenerys|jon snow|tyrion) /,w:'Game of Thrones',c:'Daenerys',tags:['GameOfThrones','GOT','Daenerys','JonSnow'],sc:[
+['The Red Wedding','Season 3: the Frey betrayal','Most Unexpected'],
+['Battle of the Bastards','Season 6: Jon vs Ramsay\'s army','Best Fight'],
+['Dany Walks Out of the Fire','Season 1 finale: the dragons hatch','Most Hype'],
+['Hold the Door','Season 6: Hodor\'s origin revealed','Most Emotional'],
+['Tyrion Demands Trial by Combat','Season 4: his speech at the trial','Best Dialogue'],
+['Cersei Blows Up the Sept','Season 6 finale: wildfire in King\'s Landing','Most Unexpected']]},
+{k:/ (the office|michael scott|dwight schrute|dunder mifflin) /,w:'The Office',c:'Michael Scott',tags:['TheOffice','MichaelScott','Dwight','DunderMifflin'],sc:[
+['\"No! No! NOOO!\"','Season 5: Michael\'s reaction in \"Goodbye, Toby\"','Funniest'],
+['Fire Drill','\"Stress Relief\": Dwight\'s fire drill causes panic','Funniest'],
+['Dinner Party','Season 4: Michael and Jan\'s dinner at her condo','Funniest'],
+['Jim\'s Gas Station Proposal','Season 5: Jim proposes to Pam in the rain','Most Emotional'],
+['Michael\'s Goodbye','Season 7: \"Goodbye, Michael\"','Most Emotional']]},
+{k:/ (toy story|woody|buzz lightyear) /,w:'Toy Story',c:'Woody',tags:['ToyStory','Pixar','Woody','BuzzLightyear'],sc:[
+['\"You Are a Toy!\"','Toy Story: Buzz realises he\'s not a real space ranger','Most Emotional'],
+['The Incinerator','Toy Story 3: the toys hold hands','Most Emotional'],
+['Sid\'s Toys Come Alive','Toy Story: Woody scares Sid','Most Satisfying'],
+['Spanish Buzz','Toy Story 3: Buzz resets to demo mode','Funniest'],
+['The Claw','Toy Story: the aliens worship the claw machine','Funniest']]},
+{k:/ (lion king|simba|mufasa) /,w:'The Lion King',c:'Simba',tags:['LionKing','Disney','Simba','Mufasa'],sc:[
+['Mufasa\'s Death','The stampede in the gorge','Most Emotional'],
+['\"Remember Who You Are\"','Simba sees Mufasa in the clouds','Best Dialogue'],
+['Circle of Life Opening','The Pride Rock presentation','Best Hook'],
+['Hakuna Matata','Timon and Pumbaa teach Simba','Funniest'],
+['Simba vs Scar','The final fight at Pride Rock','Best Fight']]},
+{k:/ (fast and furious|fast furious|dominic toretto|paul walker) /,w:'Fast & Furious',c:'Dominic Toretto',tags:['FastAndFurious','Toretto','PaulWalker','Cars'],sc:[
+['Vault Drag Through Rio','Fast Five: the safe-dragging heist chase','Most Hype'],
+['Dom vs Hobbs','Fast Five: the fight in the favela','Best Fight'],
+['Tower-to-Tower Jump','Furious 7: the Abu Dhabi skyscraper leap','Most Hype'],
+['\"See You Again\" Ending','Furious 7: Brian\'s farewell drive','Most Emotional'],
+['\"A Quarter Mile at a Time\"','The Fast and the Furious: Dom\'s opening monologue','Best Dialogue']]},
+{k:/ (john wick) /,w:'John Wick',c:'John Wick',tags:['JohnWick','Keanu','Action','Baba Yaga'],sc:[
+['Red Circle Club Massacre','Chapter 1: the nightclub fight','Best Fight'],
+['The Pencil','The legend of Baba Yaga explained','Most Hype'],
+['The Dog Scene','Chapter 1: the break-in that starts everything','Most Emotional'],
+['Horse Chase','Chapter 3: Wick fights on horseback in NYC','Most Unexpected'],
+['Library Kill','Chapter 3: Wick uses a book','Most Satisfying'],
+['Staircase Finale','Chapter 4: the long stair climb','Most Hype']]},
+{k:/ (titanic|jack and rose) /,w:'Titanic',c:'Jack Dawson',tags:['Titanic','JackAndRose','Cameron','Leonardo'],sc:[
+['\"I\'m Flying\"','Jack and Rose at the bow','Most Satisfying'],
+['The Door Scene','Jack\'s promise to Rose in the water','Most Emotional'],
+['Drawing Rose','Jack sketches Rose in the suite','Best Hook'],
+['The Orchestra Plays On','The band keeps playing as the ship sinks','Most Emotional'],
+['The Ship Splits','The stern rises and breaks in half','Most Hype'],
+['Heart of the Ocean Toss','Old Rose drops the necklace','Most Unexpected']]},
+{k:/ (shrek|fiona|donkey) /,w:'Shrek',c:'Shrek',tags:['Shrek','DreamWorks','Donkey','Fiona'],sc:[
+['\"All Star\" Opening','Shrek starts his day in the swamp','Best Hook'],
+['Ogres Are Like Onions','Shrek explains himself to Donkey','Best Dialogue'],
+['Fiona Fights Robin Hood','Matrix-style fight in the forest','Best Fight'],
+['Gingy and Farquaad','\"Run, run as fast as you can\"','Funniest'],
+['Fiona\'s True Form','Love\'s true form at the end','Most Emotional']]}
+,
+{k:/ joker /,ty:'Character',w:'Joker',c:'Joker',tags:['Joker','DC','DarkKnight','HeathLedger'],ap:['Batman (1989)','The Dark Knight','Suicide Squad','Joker (2019)','Joker: Folie à Deux'],sc:[
+['Pencil Trick','The Dark Knight: the mob-meeting disappearing act','Most Unexpected'],
+['Hospital Explosion Walk','The Dark Knight: Joker walks out as the hospital blows','Most Hype'],
+['Scar Story','The Dark Knight: Joker tells Gambol how he got his scars','Best Dialogue'],
+['\"Madness Is Like Gravity\"','The Dark Knight: Joker talks to Harvey Dent','Best Dialogue'],
+['Stair Dance','Joker (2019): Arthur dances down the steps','Best Transformation'],
+['Bathroom Dance','Joker (2019): Arthur dances after the subway','Most Satisfying'],
+['Murray Franklin Show','Joker (2019): the live TV scene','Most Unexpected']]},
+{k:/ (thor|mjolnir) /,ty:'Character',w:'Thor',c:'Thor Odinson',tags:['Thor','Marvel','MCU','Mjolnir'],ap:['Thor','The Avengers','The Dark World','Age of Ultron','Ragnarok','Infinity War','Endgame'],sc:[
+['Everyone Tries to Lift Mjolnir','Age of Ultron: the party scene','Funniest'],
+['Thor Arrives in Wakanda','Infinity War: Thor lands with Stormbreaker and Groot','Most Hype'],
+['Immigrant Song Battle','Ragnarok: Thor unleashes lightning against Hela\'s army','Most Hype'],
+['\"Bring Me Thanos!\"','Infinity War: Thor\'s battle cry','Best Dialogue'],
+['Hulk vs Thor Gladiator Fight','Ragnarok: the arena fight','Best Fight'],
+['Hela Destroys Mjolnir','Ragnarok: Thor\'s hammer breaks','Most Unexpected'],
+['Fat Thor','Endgame: Thor\'s new look','Funniest'],
+['Worthy Thor Calls Both Weapons','Endgame: Mjolnir and Stormbreaker together','Most Hype']]},
+{k:/ hulk /,ty:'Character',w:'Hulk',c:'Bruce Banner',tags:['Hulk','Marvel','MCU','BruceBanner'],ap:['The Incredible Hulk','The Avengers','Age of Ultron','Ragnarok','Infinity War','Endgame'],sc:[
+['\"Puny God\"','The Avengers: Hulk slams Loki around','Funniest'],
+['Hulk vs Abomination','The Incredible Hulk: the Harlem fight','Best Fight'],
+['\"I\'m Always Angry\"','The Avengers: Bruce\'s secret','Best Dialogue'],
+['Hulkbuster vs Hulk','Age of Ultron: the Johannesburg fight','Best Fight'],
+['Hulk Won\'t Come Out','Infinity War: Bruce can\'t transform in Wakanda','Funniest'],
+['Smart Hulk Snap','Endgame: Hulk uses the gauntlet','Most Emotional']]},
+{k:/ (captain america|steve rogers) /,ty:'Character',w:'Captain America',c:'Steve Rogers',tags:['CaptainAmerica','Marvel','MCU','SteveRogers'],ap:['The First Avenger','The Avengers','The Winter Soldier','Age of Ultron','Civil War','Infinity War','Endgame'],sc:[
+['Cap Lifts Mjolnir','Endgame: Cap proves worthy against Thanos','Most Satisfying'],
+['\"Avengers, Assemble\"','Endgame: the final battle charge','Most Hype'],
+['Elevator Fight','The Winter Soldier: Cap vs the strike team','Best Fight'],
+['Helicopter Hold','Civil War: Cap and Bucky stop the helicopter','Most Hype'],
+['Cap vs Cap','Endgame: Steve fights his past self','Funniest'],
+['Serum Transformation','The First Avenger: Steve becomes Captain America','Best Transformation'],
+['\"Language!\"','Age of Ultron: the Cap line','Funniest'],
+['Steve\'s Last Dance','Endgame: Steve and Peggy','Most Emotional']]},
+{k:/ loki /,ty:'Character',w:'Loki',c:'Loki',tags:['Loki','Marvel','MCU','TomHiddleston'],ap:['Thor','The Avengers','The Dark World','Ragnarok','Infinity War'],sc:[
+['\"Kneel Before Me\"','The Avengers: Loki in Stuttgart','Best Dialogue'],
+['Hulk Smashes Loki','The Avengers: \"Puny god\"','Funniest'],
+['\"Glorious Purpose\"','The Avengers: Loki\'s speech','Best Dialogue'],
+['Loki\'s Death','Infinity War: Thanos kills him on the ship','Most Emotional']]},
+{k:/ thanos /,ty:'Character',w:'Thanos',c:'Thanos',tags:['Thanos','Marvel','MCU','InfinityWar'],ap:['Guardians of the Galaxy','Infinity War','Endgame'],sc:[
+['The Snap','Infinity War: half the universe turns to dust','Most Unexpected'],
+['Gamora\'s Sacrifice','Infinity War: Thanos on Vormir','Most Emotional'],
+['Thanos Beats the Hulk','Infinity War: the opening on the Statesman','Most Unexpected'],
+['\"I Am Inevitable\"','Endgame: Thanos before Tony\'s snap','Best Dialogue'],
+['Thanos vs Cap and Thor','Endgame: the final battle fight','Best Fight']]},
+{k:/ (deadpool|wade wilson) /,ty:'Character',w:'Deadpool',c:'Wade Wilson',tags:['Deadpool','Marvel','RyanReynolds','Wolverine'],ap:['Deadpool','Deadpool 2','Deadpool & Wolverine'],sc:[
+['Freeway Fight','Deadpool: the highway scene with limited bullets','Best Hook'],
+['Opening Credits','Deadpool: the sarcastic credits sequence','Funniest'],
+['TVA Dance Fight','Deadpool & Wolverine: the opening fight','Most Hype'],
+['Wolverine\'s Yellow Suit','Deadpool & Wolverine: Logan in the suit','Most Hype']]},
+{k:/ (jack sparrow|pirates of the caribbean|captain jack) /,ty:'Character',w:'Pirates of the Caribbean',c:'Jack Sparrow',tags:['JackSparrow','Pirates','Disney','JohnnyDepp'],ap:['Curse of the Black Pearl','Dead Man\'s Chest','At World\'s End','On Stranger Tides','Dead Men Tell No Tales'],sc:[
+['Jack\'s Entrance','Curse of the Black Pearl: he steps off a sinking boat at the dock','Best Hook'],
+['Waterwheel Sword Fight','Dead Man\'s Chest: three-way duel on the wheel','Best Fight'],
+['Moonlight Skeletons','Curse of the Black Pearl: the curse reveal','Most Unexpected'],
+['\"Why Is the Rum Gone?\"','Curse of the Black Pearl: Jack on the island','Funniest'],
+['Maelstrom Battle','At World\'s End: ships fight in the whirlpool','Most Hype']]},
+{k:/ (optimus prime|transformers|bumblebee) /,ty:'Character',w:'Transformers',c:'Optimus Prime',tags:['Transformers','OptimusPrime','Bumblebee','Autobots'],ap:['Transformers (2007)','Revenge of the Fallen','Dark of the Moon','Bumblebee'],sc:[
+['Optimus Meets Sam','Transformers (2007): the first reveal in the yard','Best Transformation'],
+['Mission City Battle','Transformers (2007): the downtown fight','Most Hype'],
+['Optimus vs Three Decepticons','Revenge of the Fallen: the forest fight','Best Fight'],
+['Charlie and Bumblebee','Bumblebee: the garage reveal','Most Emotional']]},
+{k:/ (one piece|luffy|zoro) /,ty:'Anime',w:'One Piece',c:'Monkey D Luffy',tags:['OnePiece','Luffy','Zoro','StrawHats'],ap:['East Blue','Alabasta','Enies Lobby','Marineford','Wano','Film: Red'],sc:[
+['Gear 5 Awakening','Wano: Luffy\'s awakening vs Kaido','Most Hype'],
+['Robin\'s \"I Want to Live!\"','Enies Lobby: Robin\'s plea','Most Emotional'],
+['Zoro vs Mihawk','Baratie: Zoro\'s first duel','Best Fight'],
+['Ace\'s Death','Marineford: the war\'s turning point','Most Emotional'],
+['Luffy vs Lucci','Enies Lobby: the Gear Second fight','Best Fight']]},
+{k:/ (gta ?\d*|grand theft auto|trevor philips|franklin clinton) /,ty:'Game',w:'Grand Theft Auto',c:'Trevor Philips',tags:['GTA','GTAV','GrandTheftAuto','Rockstar'],ap:['Vice City','San Andreas','GTA IV','GTA V'],sc:[
+['\"Follow the Damn Train, CJ\"','GTA San Andreas: Big Smoke\'s line','Funniest'],
+['Opening Bank Heist','GTA V: the North Yankton job','Best Hook'],
+['\"Mr. Philips\"','GTA V: Trevor learns Michael is alive','Most Unexpected'],
+['Vice City Neon Cruise','GTA Vice City: Tommy and the 80s soundtrack','Most Satisfying'],
+['The Third Way','GTA V: the three-way ending','Most Satisfying']]},
+{k:/ (red dead|arthur morgan|john marston) /,ty:'Game',w:'Red Dead Redemption',c:'Arthur Morgan',tags:['RedDead','RDR2','ArthurMorgan','Rockstar'],ap:['Red Dead Redemption','Red Dead Redemption 2'],sc:[
+['Arthur\'s Death','RDR2: the mountain at dawn','Most Emotional'],
+['Dutch\'s Betrayal','RDR2: Arthur confronts Dutch','Most Unexpected'],
+['John Marston\'s Death','RDR1: the ambush at the ranch','Most Emotional'],
+['Ride Into Mexico','RDR1: John rides in as \"Far Away\" plays','Best Hook']]},
+{k:/ (the last of us|joel miller|ellie) /,ty:'Game',w:'The Last of Us',c:'Joel Miller',tags:['TheLastOfUs','TLOU','Joel','Ellie'],ap:['The Last of Us','Part II','HBO series'],sc:[
+['Opening Outbreak','The Last of Us: Sarah\'s death','Most Emotional'],
+['The Giraffes','The Last of Us: Joel and Ellie see them','Most Satisfying'],
+['The Hospital Choice','The Last of Us: Joel\'s decision','Most Unexpected'],
+['Joel\'s Death','Part II: the cabin scene','Most Unexpected'],
+['\"Future Days\"','Part II: Ellie plays for Joel','Most Emotional']]},
+{k:/ (god of war|kratos) /,ty:'Game',w:'God of War',c:'Kratos',tags:['GodOfWar','Kratos','Atreus','PlayStation'],ap:['God of War (2005)','God of War III','God of War (2018)','Ragnarök'],sc:[
+['Kratos vs Poseidon','God of War III: the bare-fist fight','Best Fight'],
+['The Stranger Fight','God of War (2018): Kratos vs Baldur','Best Fight'],
+['Faye\'s Ashes','God of War (2018): scattering them from the peak','Most Emotional'],
+['Atreus Is Loki','God of War (2018): the twist','Most Unexpected'],
+['Kratos vs Thor','Ragnarök: the mountain fight','Most Hype'],
+['Leviathan Axe Recall','God of War (2018): the axe returns to his hand','Most Satisfying']]},
+{k:/ minecraft /,ty:'Game',w:'Minecraft',c:'Steve',tags:['Minecraft','MinecraftMovie','Steve','Gaming'],ap:['Minecraft','A Minecraft Movie'],sc:[
+['\"Chicken Jockey\"','A Minecraft Movie: the viral theatre moment','Funniest'],
+['Ender Dragon Fight','Minecraft: the first End kill','Most Hype'],
+['First Night Survival','Minecraft: zombies, a shelter and a torch','Best Hook'],
+['Creeper Jumpscare','Minecraft: the hiss behind you','Funniest'],
+['First Nether Portal','Minecraft: stepping through for the first time','Most Unexpected']]},
+{k:/ (elden ring|malenia|margit) /,ty:'Game',w:'Elden Ring',c:'Tarnished',tags:['EldenRing','Malenia','FromSoftware','Soulslike'],ap:['Elden Ring'],sc:[
+['Radahn Festival','Elden Ring: summoning allies against Radahn','Most Hype'],
+['Malenia\'s Waterfowl Dance','Elden Ring: the legendary boss move','Best Fight'],
+['Margit, the Fell Omen','Elden Ring: the first big boss','Most Satisfying'],
+['\"YOU DIED\"','Elden Ring: the famous death screen','Funniest']]},
+{k:/ (zelda|hyrule|ganondorf) /,ty:'Game',w:'The Legend of Zelda',c:'Link',tags:['Zelda','Hyrule','BreathOfTheWild','TearsOfTheKingdom'],ap:['Ocarina of Time','Wind Waker','Twilight Princess','Breath of the Wild','Tears of the Kingdom'],sc:[
+['Master Sword Pull','Ocarina of Time: Link becomes an adult','Best Transformation'],
+['First View of Hyrule','Breath of the Wild: leaving the Great Plateau','Best Hook'],
+['Zelda\'s Awakening','Breath of the Wild: the power awakens','Most Emotional'],
+['Sky Dive','Tears of the Kingdom: Link falls from the sky islands','Most Hype'],
+['Calamity Ganon Finale','Breath of the Wild: the fight at Hyrule Castle','Most Hype']]},
+{k:/ (super mario|mario kart|mario bros|bowser) /,ty:'Game',w:'Super Mario',c:'Mario',tags:['Mario','Nintendo','SuperMario','MarioKart'],ap:['Super Mario Bros.','Mario Kart','The Super Mario Bros. Movie'],sc:[
+['World 1-1','Super Mario Bros.: the opening Goomba stomp','Best Hook'],
+['Bridge Axe','Super Mario Bros.: Mario cuts Bowser\'s bridge','Most Satisfying'],
+['Rainbow Road','Mario Kart: the iconic track','Most Hype'],
+['The Blue Shell','Mario Kart: last-lap hit','Funniest'],
+['\"Peaches\"','The Super Mario Bros. Movie: Bowser sings','Funniest']]},
+{k:/ sonic /,ty:'Game',w:'Sonic the Hedgehog',c:'Sonic',tags:['Sonic','SEGA','SonicMovie','Shadow'],ap:['Sonic the Hedgehog','Sonic Adventure 2','Sonic the Hedgehog (2020)','Sonic the Hedgehog 3 (2024)'],sc:[
+['Green Hill Zone Run','Sonic the Hedgehog: loops and speed','Best Hook'],
+['Bar Fight Time Stop','Sonic the Hedgehog (2020): the slow-motion bar scene','Funniest'],
+['Shadow Reveal','Sonic the Hedgehog 3 (2024): Shadow arrives','Most Hype']]},
+{k:/ (halo|master chief|cortana) /,ty:'Game',w:'Halo',c:'Master Chief',tags:['Halo','MasterChief','Cortana','Xbox'],ap:['Halo: Combat Evolved','Halo 2','Halo 3','Halo 4'],sc:[
+['Warthog Run','Halo: Combat Evolved: the final escape','Most Hype'],
+['Silent Cartographer Landing','Halo: Combat Evolved: the beach assault','Best Hook'],
+['Cortana\'s Fall','Halo 4: Cortana\'s goodbye','Most Emotional'],
+['Flood Reveal','Halo: Combat Evolved: the library level','Most Unexpected']]},
+{k:/ (uncharted|nathan drake) /,ty:'Game',w:'Uncharted',c:'Nathan Drake',tags:['Uncharted','NathanDrake','NaughtyDog','PlayStation'],ap:['Uncharted: Drake\'s Fortune','Uncharted 2','Uncharted 3','Uncharted 4'],sc:[
+['Hanging Train Opening','Uncharted 2: Nate wakes on a train hanging off a cliff','Best Hook'],
+['Collapsing Building','Uncharted 2: Nate climbs through a falling building','Most Hype'],
+['Cargo Plane Fall','Uncharted 3: Nate falls out of a plane','Most Hype'],
+['Sword Duel','Uncharted 4: Nate vs Rafe','Best Fight']]},
+{k:/ (resident evil|leon kennedy|chris redfield) /,ty:'Game',w:'Resident Evil',c:'Leon Kennedy',tags:['ResidentEvil','LeonKennedy','RE4','Capcom'],ap:['Resident Evil 2','Resident Evil 4','Resident Evil Village'],sc:[
+['Village Siege','Resident Evil 4: the cabin defence','Best Hook'],
+['Chainsaw Villager','Resident Evil 4: the first chainsaw attacker','Most Hype'],
+['Leon vs Krauser','Resident Evil 4: the knife fight','Best Fight'],
+['Nemesis Appears','Resident Evil 3: Nemesis shows up','Most Unexpected']]},
+{k:/ (call of duty|modern warfare|captain price) /,ty:'Game',w:'Call of Duty',c:'Captain Price',tags:['CallOfDuty','CaptainPrice','ModernWarfare','COD'],ap:['Call of Duty 4: Modern Warfare','Modern Warfare 2','Modern Warfare (2019)'],sc:[
+['All Ghillied Up','Call of Duty 4: the sniper mission with Price','Most Satisfying'],
+['Shock and Awe','Call of Duty 4: the nuke cutscene','Most Unexpected']]},
+{k:/ (cyberpunk|johnny silverhand|night city) /,ty:'Game',w:'Cyberpunk 2077',c:'Johnny Silverhand',tags:['Cyberpunk2077','JohnnySilverhand','NightCity','Edgerunners'],ap:['Cyberpunk 2077','Cyberpunk: Edgerunners'],sc:[
+['Johnny Wakes in V\'s Head','Cyberpunk 2077: the first awakening','Best Hook'],
+['The Konpeki Heist','Cyberpunk 2077: the prologue job goes wrong','Most Unexpected'],
+['David\'s Final Run','Edgerunners: the finale','Most Emotional']]},
+{k:/ (skyrim|dragonborn|dovahkiin) /,ty:'Game',w:'Skyrim',c:'Dragonborn',tags:['Skyrim','Dragonborn','TheElderScrolls','Bethesda'],ap:['The Elder Scrolls V: Skyrim'],sc:[
+['\"Hey, You. You\'re Finally Awake\"','Skyrim: the opening cart ride','Best Hook'],
+['First Fus Ro Dah','Skyrim: the Unrelenting Force shout','Most Hype'],
+['Alduin in Sovngarde','Skyrim: the final boss fight','Most Satisfying'],
+['\"Arrow to the Knee\"','Skyrim: the guard line','Funniest']]},
+{k:/ (five nights at freddy|fnaf|freddy fazbear) /,ty:'Game',w:'Five Nights at Freddy\'s',c:'Freddy Fazbear',tags:['FNAF','FiveNightsAtFreddys','FreddyFazbear','Horror'],ap:['Five Nights at Freddy\'s','Five Nights at Freddy\'s (2023 movie)'],sc:[
+['Night 1 Phone Call','FNAF 1: Phone Guy\'s instructions','Best Hook'],
+['Foxy Jumpscare','FNAF 1: the sprint down the hall','Most Unexpected'],
+['Mike\'s Night Shift','FNAF (2023): the first night on the job','Most Unexpected']]},
+{k:/ (pok.?mon|pikachu|ash ketchum) /,ty:'Game',w:'Pokemon',c:'Ash Ketchum',tags:['Pokemon','Pikachu','AshKetchum','Nintendo'],ap:['Pokemon games','Pokemon: Indigo League','Pokemon: The First Movie','Pokemon Journeys'],sc:[
+['Ash Becomes World Champion','Pokemon Journeys: the final victory','Most Emotional'],
+['Ash-Greninja Form','Pokemon XY: the bond transformation','Most Hype'],
+['Electric Shock Showdown','Pokemon: Indigo League: Pikachu vs Raichu at the Gym','Best Fight'],
+['Ash Turns to Stone','Pokemon: The First Movie: the sacrifice scene','Most Emotional']]}
+];
+const GEN=[['The Opening Moment of W','First seconds of W with the strongest visual','Best Hook'],['The Biggest Twist in W','The reveal nobody saw coming','Most Unexpected'],['W\'s Most Emotional Scene','The quiet moment that lands hardest','Most Emotional'],['Funniest Moment in W','The line or gag fans quote most','Funniest'],['W\'s Best Fight / Showdown','The peak clash of the story','Best Fight'],['Most Iconic Line in W','The quotable dialogue beat','Best Dialogue'],['Most Satisfying Payoff in W','Setup meets perfect payoff','Most Satisfying'],['W Transformation Moment','Character before vs after','Best Transformation'],['Biggest Hype Moment in W','The crowd-pleasing spectacle','Most Hype']];
+const CAT={
+'Best Hook':['Opens on instant tension, so viewers have a reason to stay past second three.','Start on the most intense frame, then rewind into context.','Hard cut on the beat, punch-in zoom, bold on-screen text in the first 2 seconds.','"Wait, what happens next?" replays and comments.'],
+'Most Emotional':['Strong emotional payoff in a short window; fans share what they feel.','Open with the line or look that breaks the character, then cut to the lead-up.','Slow-mo, muted colour grade, soft piano, one text line.','Comments like "not ready for this"; high saves and shares.'],
+'Most Hype':['Spectacle plus instantly recognizable characters gives high replay value.','Open on the final beat of the build-up, then run the full sequence.','Beat-synced cuts, speed ramps, bass drops on impact frames.','Fans rewatch for the goosebumps; "peak cinema" comments.'],
+'Funniest':['Humor travels quickly and is easy to quote or remix.','Show the punchline reaction first, then the setup.','Tight cuts, zoom on faces, sound-effect stingers, captions on the joke.','Laughing replies and tagging friends.'],
+'Most Satisfying':['Clean setup-to-payoff loops reward rewatching.','Start on the finished result, rewind and show how it happened.','Match cuts, smooth loops, ASMR-style sound design.','Viewers loop it and comment "so satisfying".'],
+'Best Transformation':['Before/after structure is built into the scene.','Split-screen the first and last frame, then play the change.','Speed ramp through the change, flash cut on the reveal, glow grade.','"Glow up" comments and heavy shares.'],
+'Best Fight':['Clear conflict and choreography with high edit potential.','Start at the first hit, not the lead-up.','Impact-frame flashes, shake, beat-synced hits, slow-mo on the finisher.','Debates about who wins; strong replays.'],
+'Best Dialogue':['One quotable line carries the clip and works as a caption.','Open on the quote as text, then reveal who said it.','Slow push-in, subtitles, minimal music, hard cut after the line.','Fans quote the line in comments.'],
+'Most Unexpected':['Surprise drives curiosity and rewatching to spot the clues.','Tease "watch the left side" or the reveal, then play to the twist.','Freeze-frame, rewind sound, zoom on the detail.','"I never noticed this" and theory comments.']};
+const BOOST={'Best Hook':0,'Most Emotional':1,'Most Hype':3,'Funniest':2,'Most Satisfying':2,'Best Transformation':3,'Best Fight':3,'Best Dialogue':1,'Most Unexpected':0};
+const TIP={youtube:'YouTube tip: loop the last frame into the first to lift replays; put the hook in the title.',instagram:'Reels tip: add on-screen text and a trending audio; keep captions short with a CTA.'};
+const TT={curiosity:['Why {s} Hits Different','The Hidden Detail in {s}','What Really Happens in {s}?','{s}: The Part Everyone Missed','Nobody Noticed This in {s}','How {s} Actually Works'],
+hype:['{s} Is Pure Cinema','{s} Still Gives Me Chills','This {w} Moment Never Gets Old','{s} Was Absolutely Unreal','Peak {w}: {s}','Nothing Tops {s}'],
+emotional:['{s} Hits Harder Every Time','{s} Broke Everyone','The {w} Scene That Made Us Cry','{s}: I Wasn\'t Ready','Still Not Over {s}','{s} Will Always Hurt'],
+funny:['{s}, But It\'s Perfectly Chaotic','I Can\'t Stop Laughing at {s}','{s} Lives Rent Free in My Head','POV: You\'re Watching {s}','{s} Out of Context','{w} Did Not Need To Go This Hard: {s}'],
+dark:['{s} Was Darker Than You Remember','The Dark Side of {s}','{s} Is Unsettling If You Think About It','Nobody Talks About How Dark {s} Is','{s} Changed Everything','The Cold Truth Behind {s}'],
+simple:['{s}','{s} | {w}','{w}: {s}','Best of {w}: {s}','{s} Edit','{w} Scene: {s}'],
+cinematic:['{s}: A Cinematic Moment','Frame by Frame: {s}','{s} Deserves a Rewatch','{w} · {s} · Cinematic Edit','Pure Cinema: {s}','The Art of {s}'],
+story:['The Story Behind {s}','How {s} Changed {w} Forever','It Started With {s}','Why {s} Matters in {w}','Everything Leads to {s}','The Moment {w} Changed: {s}']};
+const EM={curiosity:'🤔',hype:'🔥',emotional:'💔',funny:'😂',dark:'🖤',simple:'🎬',cinematic:'🎞️',story:'📖'};
+const CTA=['Follow for more movie edits 🎬','Save this for later 📌','Send this to a fan 👇','Which scene is next? Comment below 👇'];
+const STOP=new Set('the a an of in on at to from and or for with scene scenes movie movies film series show game video clip best moment moments edit shorts reels is it that this my i when where how what why tv animated'.split(' '));
+const words=t=>t.toLowerCase().replace(/[^a-z0-9\s'-]/g,' ').split(/\s+/).filter(w=>w&&!STOP.has(w));
+function ctx(text){const n=' '+text.toLowerCase().replace(/[^a-z0-9]+/g,' ')+' ',kb=KB.find(k=>k.k.test(n)),toks=words(text);
+ let w,rest;
+ if(kb){w=kb.w;const wt=new Set(w.toLowerCase().replace(/[^a-z0-9 ]/g,'').split(' '));rest=toks.filter(t=>!wt.has(t)&&!kb.k.test(' '+t+' '))}
+ else if(toks.length<=4){w=cap(toks.join(' '))||cap(text.trim());rest=[]}
+ else{w=cap(toks.slice(0,2).join(' '));rest=toks.slice(2)}
+ return{kb,w,rest,camel:w.replace(/[^A-Za-z0-9]/g,'')||'Movie',sp:rest.slice(0,3).join(' ')}}
+
+/* ---------- engine: replace each fn with an async API call later ---------- */
+const engine={};
+engine.scene=P=>{const c=ctx(P.q),r=R(H(P.q.toLowerCase()+'|s|'+P.v));
+ let list=c.kb?shuf(r,c.kb.sc).slice(0,c.kb.ap?8:6):[];
+ if(!c.kb&&c.sp)list.push([cap(c.sp)+' Moment','W — the '+c.sp+' sequence','Best Hook']);
+ const used=new Set(list.map(x=>x[2])),g=shuf(r,GEN).filter(x=>!used.has(x[2]));
+ while(list.length<6&&g.length)list.push(g.shift());
+ const out=list.map(([n,m,cat])=>{const sc=()=>Math.round(6.6+r()*3.4),a=[sc(),sc(),sc(),sc()];a[BOOST[cat]]=Math.max(a[BOOST[cat]],9);
+  const vp=Math.min(96,Math.max(62,Math.round(a.reduce((x,y)=>x+y)/4*10+r()*6-2)));
+  const[why,hook,edit,react]=CAT[cat],rec=P.plat==='both'?(r()>.5?'YouTube Shorts first, then Reels':'Reels first, then YouTube Shorts'):PL[P.plat];
+  return{name:n.replace(/\bW\b/g,c.w),moment:m.replace(/\bW\b/g,c.w),cat,vp,h:a[0],e:a[1],p:a[2],d:a[3],why,hook,edit,react,rec,tip:P.plat==='both'?TIP.youtube+' '+TIP.instagram:TIP[P.plat]}});out.known=!!c.kb;out.w=c.w;out.ty=c.kb&&c.kb.ty;out.ap=c.kb&&c.kb.ap;out.c=c.kb&&c.kb.c;return out};
+const subj=(d,f)=>{let s=d.trim().replace(/[.!?\s]+$/,'');if(!s&&f)s=f.name.replace(/\.[^.]+$/,'').replace(/[_\-.]+/g,' ').replace(/\b(final|export|copy|v\d+|\d{3,4}p|hd)\b/gi,'').replace(/\s+/g,' ').trim();s=s.split(/\s+/).slice(0,9).join(' ');return s?s[0].toUpperCase()+s.slice(1):''};
+engine.title=P=>{const c=ctx(P.work||P.d||''),w0=P.work?cap(P.work.trim()):(c.kb?c.kb.w:''),s=subj(P.d,P.file)||w0||'This clip',w=w0&&w0.toLowerCase()!==s.toLowerCase()?w0:'';
+ return(P.plat==='both'?['youtube','instagram']:[P.plat]).map(pl=>{const r=R(H(P.d+P.work+P.style+pl+'|t|'+P.v)),N=S.set.n,styles=P.style==='all'?Object.keys(TT):[P.style];
+  let pool=[];styles.forEach(k=>TT[k].forEach(t=>{if(w||!t.includes('{w}'))pool.push([k,t])}));pool=shuf(r,pool);
+  const out=pool.slice(0,N);
+  for(let i=0;out.length<N&&i<80;i++){const[k,t]=pool[i%pool.length],x=[k,t+pick(r,[w?' | '+w:' | Short Edit',' — Short Edit',' 🎬'])];if(!out.some(o=>o[1]===x[1]))out.push(x)}
+  return{plat:pl,items:out.map(([k,t])=>{const f=t.replace(/\{s\}/g,s).replace(/\{w\}/g,w);
+   const txt=pl==='youtube'?f+(S.set.sh&&f.length+8<=100?' #Shorts':''):EM[k]+' '+f+'\n'+pick(r,CTA);return{txt,style:k,len:txt.length}})}})};
+engine.hash=P=>{const c=ctx(P.q);return(P.plat==='both'?['youtube','instagram']:[P.plat]).map(pl=>{const r=R(H(P.q.toLowerCase()+pl+'|h|'+P.v)),y=pl==='youtube',kw=c.rest.map(cap),sc=[];
+  if(kw.length>1)sc.push(kw.join(''));kw.slice(0,3).forEach(k=>sc.push(c.camel+k));
+  const core=shuf(r,[c.camel,c.camel+'Edit',c.camel+'Scene',c.camel+'Fans',c.camel+'Moments']).slice(0,y?3:4),
+  kbt=c.kb?shuf(r,c.kb.tags.concat(c.kb.c.replace(/ /g,''))).slice(0,y?2:4):[],
+  ni=shuf(r,['MovieEdits','CinematicEdit','FilmTok','MovieScenes','FanEdit','VideoEditing','CapCutEdit','MovieClips','FilmEdit']).slice(0,y?2:4),
+  pf=y?['Shorts','YouTubeShorts']:shuf(r,['Reels','InstagramReels','ReelsInstagram','ExplorePage']).slice(0,3),
+  g=[['Platform',pf],['This scene',sc.slice(0,y?2:4)],['Franchise & character',[...core,...kbt]],['Niche',ni]];if(!y)g.push(['Reach',['Viral','TrendingReels']]);
+  const seen=new Set();return{plat:pl,groups:g.map(([l,a])=>[l,a.filter(x=>x&&!seen.has(x.toLowerCase())&&seen.add(x.toLowerCase())).map(x=>'#'+x.replace(/[^A-Za-z0-9]/g,''))]).filter(x=>x[1].length)}})};
+engine.tags=P=>{const c=ctx(P.q),r=R(H(P.q.toLowerCase()+'|k|'+P.v)),w=c.w.toLowerCase(),sp=c.sp,ch=c.kb?c.kb.c.toLowerCase():'';
+ const primary=[`${w} ${sp||'best scene'}`,`${w} ${sp?sp+' ':''}shorts`,`${w} edit`],
+ secondary=shuf(r,[`best ${w} scenes`,`${w} scene explained`,`${w} movie clips`,`${w} cinematic edit`,`${w} fan edit`,`${w} ${sp||'iconic'} moment`,ch&&`${ch} ${w}`,ch&&`${ch} best moments`,`${w} scene breakdown`,`${w} short clip`].filter(Boolean)).slice(0,6),
+ queries=[`${sp||'best'} scene from ${w}`,`${w} ${sp||'best'} scene explained`,`${w} ${sp||'best'} clip`,`${w} ${sp||'top'} moments ranked`];
+ let all=[...new Set([...primary,...secondary,...(c.kb?c.kb.tags.map(x=>x.toLowerCase()):[]),'shorts','youtube shorts'])],tags=[],n=0;
+ for(const t of all){if(n+t.length+1>500)break;tags.push(t);n+=t.length+1}
+ return{primary,secondary,queries,tags,n}};
+
+/* ---------- renderers ---------- */
+const bar=(l,v)=>`<div class="bar"><span>${l}</span><i><u style="width:${v*10}%"></u></i><em>${v}/10</em></div>`;
+const chips=a=>`<div class="chips">${a.map(x=>`<button class="chip" ${cp(x)}>${esc(x)}</button>`).join('')}</div>`;
+const rh=(P,q,extra='')=>`<div class="rh"><h3>${esc(q)}</h3><span class="badge">${PL[P.plat]}</span>${extra}</div>`;
+const RN={
+scene(P){const L=engine.scene(P);return rh(P,'Scene ideas for “'+P.q+'”')+(L.known?(L.ap?`<div class="note"><b>${esc(L.ty||'Profile')}: ${esc(L.w)}</b>${L.ty==='Character'&&L.c&&L.c!==L.w?' ('+esc(L.c)+')':''} · Scenes come from: ${L.ap.map(esc).join(', ')}.</div>`:''):`<div class="note"><b>No named scene list for “${esc(P.q)}” yet.</b> The ideas below are scene types to look for. For specific scenes, try a character name (Joker, Kratos, Arthur Morgan), a game, or a title plus an event, e.g. “Iron Man cave escape”.</div>`)+`<div class="note">Viral potential is an estimate from hook strength, emotion, recognizability, replayability and edit potential. It is not a guarantee.</div><div class="grid">`+L.map((s,i)=>`<article class="sc" style="animation-delay:${i*60}ms"><div class="t"><span class="cat">${s.cat}</span><div class="score"><b>${s.vp}</b><small>/100 · estimate</small></div></div><h4>${esc(s.name)}</h4><p class="mu">${esc(s.moment)}</p>${bar('Hook',s.h)}${bar('Emotion',s.e)}${bar('Replay',s.p)}${bar('Editing',s.d)}<p><b>Why it could work</b>${s.why}</p><p><b>Suggested hook</b>${s.hook}</p><p><b>Editing concept</b>${s.edit}</p><p><b>Likely reaction</b>${s.react}</p><p><b>Recommended</b>${s.rec}. ${s.tip}</p><div><button class="cb" ${cp(`${s.name} (${s.cat}) — viral potential ~${s.vp}/100\nMoment: ${s.moment}\nHook: ${s.hook}\nEdit: ${s.edit}`)}>Copy summary</button></div></article>`).join('')+'</div>'},
+title(P){const G=engine.title(P),f=P.file;
+ return rh(P,'Titles'+(P.d?' for “'+P.d.slice(0,50)+'”':''))+(f?`<div class="note">Video content is not analyzed in this prototype. Titles use the filename “${esc(f.name)}”${f.dur?`, duration ${Math.round(f.dur)}s`:''}${f.w?`, ${f.w}×${f.h}`:''} and your text.${f.dur>180?' This clip is long for short-form; consider trimming.':''}</div>`:'')+G.map(g=>`${P.plat==='both'?`<div class="gl">${PL[g.plat]}</div>`:''}<ol class="tl">${g.items.map((t,i)=>`<li style="animation-delay:${i*40}ms"><span class="n">${i+1}</span><div class="x">${esc(t.txt)}<small>${t.style} · ${t.len} chars</small></div><button class="cb" ${cp(t.txt)}>Copy</button></li>`).join('')}</ol><button class="cb" ${cp(g.items.map(t=>t.txt).join('\n\n'))}>Copy all</button>`).join('')},
+hash(P){const G=engine.hash(P);return rh(P,'Hashtags for “'+P.q+'”')+`<div class="two">`+G.map(g=>{const all=g.groups.flatMap(x=>x[1]);return`<div class="panel"><div class="rh"><h3>${g.plat==='youtube'?'YouTube':'Instagram'} · ${all.length} tags</h3><button class="cb" ${cp(all.join(' '))}>Copy All</button></div>${g.groups.map(([l,a])=>`<div class="gl">${l}</div>${chips(a)}`).join('')}</div>`}).join('')+`</div>`},
+tags(P){const T=engine.tags(P);return rh(P,'YouTube tags for “'+P.q+'”')+(P.plat==='instagram'?`<div class="note">YouTube tags are YouTube-only. For Instagram, use the Hashtag Generator. These are shown for reference.</div>`:'')+`<div class="two"><div class="panel"><div class="gl">Primary keywords</div>${chips(T.primary)}<div class="gl">Secondary keywords</div>${chips(T.secondary)}<div class="gl">Likely search queries</div>${chips(T.queries)}</div><div class="panel"><div class="rh"><h3>SEO tags · ${T.n}/500 chars</h3><button class="cb" ${cp(T.tags.join(', '))}>Copy Tags</button></div>${chips(T.tags)}</div></div>`}};
+const TOOLS=[
+{id:'scene',n:'Viral Scene Finder',i:'🎬',d:'Find high-potential moments from any movie, series, anime, game or character, across every title they appeared in.',l:'Movie, series, game, character or topic',ph:'e.g. Iron Man, Joker, Kratos, Breaking Bad…',ex:['Iron Man','Joker','Thor','Kratos','Arthur Morgan','Minecraft','Spider-Man','Batman','Breaking Bad','Avengers Endgame']},
+{id:'title',n:'Title Generator',i:'✍️',d:'Platform-ready titles in 8 styles. Describe your scene or upload a clip.',l:'Describe your scene',ph:'e.g. Tony Stark builds the Mark I in the cave'},
+{id:'hash',n:'Hashtag Generator',i:'#️⃣',d:'Hashtags matched to your scene, franchise and niche.',l:'Scene, movie or topic',ph:'e.g. Batman Joker interrogation scene',ex:['Batman Joker interrogation','Iron Man cave escape','Minecraft zombie fight']},
+{id:'tags',n:'YouTube Tags Generator',i:'🏷️',d:'SEO tags plus primary and secondary keywords for your Short.',l:'Scene, movie or topic',ph:'e.g. Walter White "I am the one who knocks"',ex:['Walter White knocks speech','Spider-Man train scene','Lightning McQueen final race']}];
+const ago=t=>{const m=Math.round((Date.now()-t)/6e4);return m<1?'just now':m<60?m+'m ago':m<1440?Math.round(m/60)+'h ago':Math.round(m/1440)+'d ago'};
+const hist=()=>store.get('sfai_hist',[{tool:'scene',q:'Iron Man',plat:'youtube',t:Date.now()-36e5},{tool:'title',q:'Tony Stark builds the Mark I in a cave',work:'Iron Man',plat:'instagram',t:Date.now()-72e5},{tool:'hash',q:'Batman Joker interrogation',plat:'both',t:Date.now()-864e5}]);
+
+/* ---------- build UI ---------- */
+function build(){
+ $('#nav').innerHTML=`<button data-go="home">Home</button>`+TOOLS.map(t=>`<button data-go="${t.id}">${t.n}</button>`).join('');
+ let h=`<section class="view" id="v-home"><h1>Find the scene. <em>Ship the Short.</em></h1><p class="sub">Viral-potential scene ideas, titles, hashtags and SEO tags for YouTube Shorts and Instagram Reels.</p><div class="cards">${TOOLS.map(t=>`<button class="tc" data-go="${t.id}"><div class="ic">${t.i}</div><h3>${t.n}</h3><p>${t.d}</p></button>`).join('')}</div><h2>Recent generations</h2><p class="sub">Click one to run it again.</p><div class="hl" id="hl"></div></section>`;
+ TOOLS.forEach(t=>{const body=t.id==='title'?`<label>${t.l}</label><textarea id="i-title" rows="3" placeholder="${t.ph}"></textarea><label>Movie / series / game (optional)</label><input id="w-title" placeholder="e.g. Iron Man"><label>Title style</label><div class="chips" id="st">${['all',...Object.keys(TT)].map(k=>`<button class="chip${k==='all'?' on':''}" data-st="${k}">${cap(k)}</button>`).join('')}</div><label>…or upload a clip (uses filename &amp; metadata)</label><div class="dz" id="dz"><input type="file" id="vf" accept="video/*" hidden><div>Drag &amp; drop a video here, or <button class="cb" id="ub" type="button">Upload video</button></div><div id="pv"></div></div>`
+  :`<label>${t.l}</label><input id="i-${t.id}" placeholder="${esc(t.ph)}" autocomplete="off"><div class="chips">${t.ex.map(x=>`<button class="chip" data-ex="${t.id}|${esc(x)}">${x}</button>`).join('')}</div>`;
+  h+=`<section class="view" id="v-${t.id}"><h2>${t.i} ${t.n}</h2><p class="sub">${t.d}</p><div class="panel">${body}<div class="err" id="e-${t.id}"></div><div class="row"><button class="btn" id="g-${t.id}">✨ Generate</button><button class="btn ghost" id="a-${t.id}" hidden>↻ Generate Again</button></div></div><div id="r-${t.id}"><div class="empty">Results will appear here. Pick a platform above, enter something, and hit Generate.</div></div></section>`});
+ h+=`<section class="view" id="v-set"><h2>⚙ Settings</h2><p class="sub">Saved in this browser.</p><div class="panel"><div class="srow"><span>Default platform</span><select id="s-plat"><option value="youtube">YouTube</option><option value="instagram">Instagram</option><option value="both">Both</option></select></div><div class="srow"><span>Add #Shorts to YouTube titles</span><select id="s-sh"><option value="1">Yes</option><option value="0">No</option></select></div><div class="srow"><span>Titles per generation</span><select id="s-n"><option>10</option><option>15</option><option>20</option></select></div><div class="srow"><span>Clear generation history</span><button class="btn ghost" id="s-clr">Clear</button></div><p class="mu" style="font-size:13px">AI engine: local mock. Each tool calls one function in <code>engine</code>, so a real model API can replace it later.</p></div></section>`;
+ $('#app').innerHTML=h;
+ $('#s-plat').value=S.set.plat;$('#s-sh').value=S.set.sh?'1':'0';$('#s-n').value=S.set.n;
+ renderHist();setPlat(S.plat,true);go('home');setTimeout(()=>document.documentElement.classList.add('tr'),80)}
+function renderHist(){const L=hist();$('#hl').innerHTML=L.length?L.map((x,i)=>`<button class="hi" data-h="${i}"><span>${TOOLS.find(t=>t.id===x.tool).i}</span><b>${esc(x.q)}</b><small>${TOOLS.find(t=>t.id===x.tool).n} · ${x.plat} · ${ago(x.t)}</small></button>`).join(''):'<div class="empty">No generations yet.</div>'}
+function go(v){S.view=v;$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.go===v));scrollTo({top:0,behavior:'smooth'})}
+function setPlat(p,quiet){S.plat=p;document.documentElement.dataset.theme=p;$$('#plat button').forEach(b=>b.classList.toggle('on',b.dataset.p===p));if(!quiet)Object.keys(S.P).forEach(t=>draw(t))}
+function draw(t){const P=S.P[t];if(!P)return;P.plat=S.plat;$('#r-'+t).innerHTML=RN[t](P)}
+
+/* ---------- generate ---------- */
+function fail(t,m){const e=$('#e-'+t);e.textContent=m;e.style.animation='none';e.offsetWidth;e.style.animation='';const i=$('#i-'+t);i&&i.focus()}
+function read(t){$('#e-'+t).textContent='';
+ if(t==='title'){const d=$('#i-title').value.trim(),w=$('#w-title').value.trim();if(d.length<3&&!w&&!S.file)return fail(t,'Describe your scene (at least a few words), enter a movie/game name, or upload a video.'),null;return{d,work:w,style:S.style,file:S.file,q:d||w||S.file.name}}
+ const q=$('#i-'+t).value.trim();if(q.length<2)return fail(t,'Enter at least 2 characters: a movie, character, game, topic or scene.'),null;return{q}}
+async function run(t,again){if(S.busy)return;let P;
+ if(again&&S.P[t]){P={...S.P[t],v:S.P[t].v+1}}else{P=read(t);if(!P)return;P.v=0}
+ P.plat=S.plat;S.busy=true;$$('.btn').forEach(b=>b.disabled=true);
+ $('#r-'+t).innerHTML='<div class="ld">Generating '+PL[S.plat]+' results…</div><div class="sk"></div><div class="sk"></div>';
+ try{await sleep(700+Math.random()*400);S.P[t]=P;draw(t);$('#a-'+t).hidden=false;
+  if(!again){let L=hist().filter(x=>!(x.tool===t&&x.q===P.q&&x.plat===P.plat));L.unshift({tool:t,q:P.q,work:P.work,plat:P.plat,t:Date.now()});store.set('sfai_hist',L.slice(0,12));renderHist()}}
+ catch(e){$('#r-'+t).innerHTML='<div class="empty">Something went wrong generating results. Please try again.</div>';console.error(e)}
+ S.busy=false;$$('.btn').forEach(b=>b.disabled=false)}
+
+/* ---------- video upload ---------- */
+function setFile(f){const pv=$('#pv');if(S.file&&S.file.url)URL.revokeObjectURL(S.file.url);
+ if(!f){S.file=null;pv.innerHTML='';return}
+ if(!f.type.startsWith('video/')){fail('title','That file is not a video. Please choose an MP4, MOV or WebM file.');return}
+ S.file={name:f.name,size:f.size,url:URL.createObjectURL(f)};$('#e-title').textContent='';
+ pv.innerHTML=`<video controls muted playsinline src="${S.file.url}"></video><div class="mu" id="fi" style="font-size:13px;margin-top:8px">${esc(f.name)} · ${(f.size/1048576).toFixed(1)} MB</div><button class="cb" id="rmv" type="button" style="margin-top:8px">Remove</button>`;
+ const v=$('video',pv);v.onloadedmetadata=()=>{S.file.dur=v.duration;S.file.w=v.videoWidth;S.file.h=v.videoHeight;$('#fi').textContent+=` · ${Math.round(v.duration)}s · ${v.videoWidth}×${v.videoHeight}`};
+ v.onerror=()=>{$('#fi').textContent+=' · preview unavailable for this format (filename will still be used)'}}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{const t=e.target;let b;
+ if(b=t.closest('[data-ci]')){copy(CP[b.dataset.ci]);b.classList.add('ok');setTimeout(()=>b.classList.remove('ok'),900);return}
+ if(b=t.closest('[data-go]'))return go(b.dataset.go);
+ if(t.closest('#logo'))return go('home');if(t.closest('#setb'))return go('set');
+ if(b=t.closest('#plat button'))return setPlat(b.dataset.p);
+ if(b=t.closest('[data-ex]')){const[id,q]=b.dataset.ex.split('|');$('#i-'+id).value=q;return run(id)}
+ if(b=t.closest('[data-st]')){S.style=b.dataset.st;$$('[data-st]').forEach(c=>c.classList.toggle('on',c===b));return}
+ if(b=t.closest('[data-h]')){const x=hist()[b.dataset.h];go(x.tool);if(x.tool==='title'){$('#i-title').value=x.q;$('#w-title').value=x.work||''}else $('#i-'+x.tool).value=x.q;setPlat(x.plat,true);return run(x.tool)}
+ if(b=t.closest('[id^=g-]'))return run(b.id.slice(2));
+ if(b=t.closest('[id^=a-]'))return run(b.id.slice(2),true);
+ if(t.closest('#ub')||t.id==='dz'){$('#vf').click();return}
+ if(t.closest('#rmv')){setFile(null);$('#vf').value='';return}
+ if(t.closest('#s-clr')){store.set('sfai_hist',[]);renderHist();toast('History cleared')}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('input[id^=i-]'))run(e.target.id.slice(2))});
+document.addEventListener('input',e=>{if(e.target.id&&/^[iw]-/.test(e.target.id))$('#e-'+e.target.id.slice(2)).textContent=''});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.id==='vf')return t.files[0]&&setFile(t.files[0]);
+ if(t.id==='s-plat'){S.set.plat=t.value;setPlat(t.value)}
+ if(t.id==='s-sh')S.set.sh=t.value==='1';if(t.id==='s-n')S.set.n=+t.value;
+ if(t.id&&t.id.startsWith('s-'))store.set('sfai_set',S.set)});
+['dragover','dragleave','drop'].forEach(ev=>document.addEventListener(ev,e=>{const z=e.target.closest&&e.target.closest('#dz');if(!z)return;e.preventDefault();z.classList.toggle('over',ev==='dragover');if(ev==='drop'&&e.dataTransfer.files[0])setFile(e.dataTransfer.files[0])}));
+build();
+</script></body></html>
